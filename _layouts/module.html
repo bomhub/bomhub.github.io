@@ -14,6 +14,26 @@ layout: default
         <li>{{ page.size }}</li>
         <li>{{ page.tags }}</li>
     </ul>
+    <h3>Build {{ page.modname }}</h3>
+    <ul>
+      <li>Bill of Materials
+        <ul>
+          {% for thebom in page.build.bom %}
+          <li><a href="{{thebom[1]}}">{{thebom[0]}}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+      <li>Build guide
+        <ul>
+          {% for guide in page.build.buildguide %}
+          <li>
+            <a href="{{guide[1]}}">{{guide[0]}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+
+    </ul>
     {{ content }}
   </div>
 
