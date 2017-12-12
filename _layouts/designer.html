@@ -1,0 +1,19 @@
+---
+layout: default
+---
+<article class="post">
+  <div class="home">
+
+    {% assign grouped_pages = site.pages | where: 'designer', page.designer | where: 'layout', 'module' | group_by: 'designer' | sort: 'name' %}
+    {% for group in grouped_pages %}
+    {% assign gname = group.name | downcase %}  
+    Modules from {{group.name}}
+    <ul>
+      {% for module in group.items %}
+      <li><a href="{{module.url}}">{{module.modname | capitalize}}</a></li>
+      {% endfor %}
+    </ul>      
+    {% endfor %}
+    {{ content }}
+    </div>
+</article>
