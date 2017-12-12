@@ -10,7 +10,7 @@ layout: default
     Modules from {{group.name}}
     <ul>
       {% for module in group.items %}
-      <li><a href="{{module.url}}">{{module.modname | capitalize}}</a></li>
+      <li><a href="{{module.url | prepend: site.baseurl }}">{{module.modname | capitalize}}</a></li>
       {% endfor %}
     </ul>      
     {% endfor %}

@@ -6,7 +6,7 @@ layout: default
   <ul>
     {% assign pages = site.pages  | where: 'layout', 'designer' | sort: 'name' %}
     {% for group  in pages %}
-    <li><a href="{{group.url}}">{{group.designer}}</a></li>
+    <li><a href="{{group.url | prepend: site.baseurl }}">{{group.designer}}</a></li>
     {% endfor %}
   </ul>
 </div>
