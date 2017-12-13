@@ -26,7 +26,7 @@ Any content (markdown or html) underneath that header (after teh second `---`) w
 
 ## Adding modules
 
-Each module should be its own markdown file, in the folder of it's designer. Modules have more complex metadata (the header between the `---`), some of which is required, other optional. 
+Each module should be its own markdown file, in the folder of its designer. Modules have more complex metadata (the header between the `---`), some of which is required, other optional. 
 
 ```
 ---

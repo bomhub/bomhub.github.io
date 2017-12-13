@@ -12,11 +12,11 @@ layout: default
         {% assign unique_tags = unique_tags | push: tag %} {% endunless %} {% assign previous = tag %} {% endfor %}
         <ul>
         {%for tag in unique_tags | sort %}
-        <li><a name="{{ tag }}">{{ tag }}</a>
+        <li>Modules tagged as <a name="{{ tag }}">{{ tag }}</a>
             <ul>
                 {% for page in site.pages | where: 'layout', 'module' %}
                 {% if page.tags contains tag %}
-                <li><a href="{{ page.url }}">{{ page.modname }}</a></li>
+                <li><a href="{{ page.url }}">{{ page.modname }}</a> by {{page.designer}}</li>
                 {% endif %}
                 {% endfor %}
             </ul>
