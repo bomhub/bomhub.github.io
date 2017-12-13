@@ -7,7 +7,7 @@ layout: default
 
 {{ site.pages | where: 'name', 'README.md' }}
   <ul>
-    {% assign pages = site.pages  | where: 'layout', 'designer' | sort: 'name' %}
+    {% assign pages = site.pages  | where: 'layout', 'designer' | sort: 'designer' %}
     {% for group in pages %}
     <li><a href="{{group.url | prepend: site.baseurl }}">{{group.designer}}</a></li>
     {% endfor %}
