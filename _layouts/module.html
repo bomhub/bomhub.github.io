@@ -1,12 +1,29 @@
 ---
 layout: default
 ---
-<article class="post">
 
-  <header class="post-header">
-    <h1 class="post-title">
-      <a href="{{page.homepage}}">{{ page.modname }}</a></h1>
-  </header>
+<nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="{{ my_page.url | prepend: site.baseurl }}">Home</a></li>
+    <li><a href="{{ page.designer | prepend: site.url }}">{{ page.designer }}</a></li>
+    <li class="is-active"><a href="{{page.homepage}}">{{ page.modname }}</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        {{ page.modname }}
+      </h1>
+      <h2 class="subtitle">
+        {{ page.tags }}
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
 
   <div class="post-content">
     <ul>
@@ -19,16 +36,16 @@ layout: default
       <li>Bill of Materials
         <ul>
           {% for thebom in page.build.bom %}
-          <li><a href="{{thebom[1]}}">{{thebom[0]}}</a></li>
+            <li><a href="{{thebom[1]}}">{{thebom[0]}}</a></li>
           {% endfor %}
         </ul>
       </li>
       <li>Build guide
         <ul>
           {% for guide in page.build.buildguide %}
-          <li>
-            <a href="{{guide[1]}}">{{guide[0]}}</a>
-          </li>
+            <li>
+              <a href="{{guide[1]}}">{{guide[0]}}</a>
+            </li>
           {% endfor %}
         </ul>
       </li>
@@ -37,4 +54,4 @@ layout: default
     {{ content }}
   </div>
 
-</article>
+</section>
