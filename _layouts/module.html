@@ -9,32 +9,49 @@ layout: default
   </header>
 
   <div class="post-content">
-    <ul>
-        <li>{{ page.designer }}</li>
-        <li>{{ page.size }}</li>
-        <li>{{ page.tags }}</li>
-    </ul>
-    <h3>Build {{ page.modname }}</h3>
-    <ul>
-      <li>Bill of Materials
-        <ul>
-          {% for thebom in page.build.bom %}
-          <li><a href="{{thebom[1]}}">{{thebom[0]}}</a></li>
-          {% endfor %}
-        </ul>
+    <div id="info"></div>
+      <ul>
+          <li><a href="index.html">{{ page.designer }}</a></li>
+          <li>{{ page.size }}</li>
+          <li>{{ page.tags }}</li>
+      </ul>
+    </div>
+    <div id="build">
+      <h3>Build {{ page.modname }}</h3>
+      <ul>
+        <li>Bill of Materials
+          <ul>
+            {% for thebom in page.build.bom %}
+            <li><a href="{{thebom[1]}}">{{thebom[0]}}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li>Build guide
+          <ul>
+            {% for guide in page.build.buildguide %}
+            <li>
+              <a href="{{guide[1]}}">{{guide[0]}}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div id="buy">
+    <h3>Buy {{ page.modname }}</h3>
+    <ul> 
+      {% for store in page.buy %}
+      <li>
+        <a href="{{store[1]}}">{{store[0]}}</a>
       </li>
-      <li>Build guide
-        <ul>
-          {% for guide in page.build.buildguide %}
-          <li>
-            <a href="{{guide[1]}}">{{guide[0]}}</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </li>
-
+      {% endfor %}
     </ul>
+    </div>
+    <div id="about">
     {{ content }}
+    </div>
+    <p>More by <a href="index.html">{{ page.designer }}</a></p>
   </div>
+
 
 </article>
