@@ -3,10 +3,15 @@ layout: default
 ---
 
 <div class="home">
+  
+
+{{ site.pages | where: 'name', 'README.md' }}
   <ul>
-    {% assign pages = site.pages  | where: 'layout', 'designer' | sort: 'name' %}
+    {% assign pages = site.pages  | where: 'layout', 'designer' | sort: 'designer' %}
     {% for group in pages %}
       <li><a href="{{ group.url | prepend: site.baseurl }}">{{group.designer}}</a></li>
     {% endfor %}
   </ul>
+  Want to help? See <a href="contributing">how to contribute</a>.
+  Find a module by <a href="tags">tags</a>.
 </div>

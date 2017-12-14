@@ -43,4 +43,5 @@ $addColors: (
 $colors: map-merge($colors, $addColors);
 
 // 6. Import the rest of Bulma
+
 @import "bulma";

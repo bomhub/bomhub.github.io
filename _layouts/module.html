@@ -5,7 +5,7 @@ layout: default
 <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
   <ul>
     <li><a href="{{ my_page.url | prepend: site.baseurl }}">Home</a></li>
-    <li><a href="{{ page.designer | prepend: site.url }}">{{ page.designer }}</a></li>
+    <li><a href="index.html">{{ page.designer }}</a></li>
     <li class="is-active"><a href="{{page.homepage}}">{{ page.modname }}</a></li>
   </ul>
 </nav>
@@ -26,32 +26,49 @@ layout: default
 <section class="section">
 
   <div class="post-content">
-    <ul>
-        <li>{{ page.designer }}</li>
-        <li>{{ page.size }}</li>
-        <li>{{ page.tags }}</li>
-    </ul>
-    <h3>Build {{ page.modname }}</h3>
-    <ul>
-      <li>Bill of Materials
-        <ul>
-          {% for thebom in page.build.bom %}
+    <div id="info">
+      <ul>
+          <li><a href="index.html">{{ page.designer }}</a></li>
+          <li>{{ page.size }}</li>
+          {% assign mod_tags = page.tags | split: ','%}
+          <li>{% for tag in mod_tags %}<a href="{{site.baseurl}}/tags#{{tag}}">{{tag}}</a>{% if forloop.last == false %}, {% endif %}{% endfor %}</li>
+      </ul>
+    </div>
+    <div id="build">
+      <h3>Build {{ page.modname }}</h3>
+      <ul>
+        <li>Bill of Materials
+          <ul>
+            {% for thebom in page.build.bom %}
             <li><a href="{{thebom[1]}}">{{thebom[0]}}</a></li>
-          {% endfor %}
-        </ul>
-      </li>
-      <li>Build guide
-        <ul>
-          {% for guide in page.build.buildguide %}
+            {% endfor %}
+          </ul>
+        </li>
+        <li>Build guide
+          <ul>
+            {% for guide in page.build.buildguide %}
             <li>
               <a href="{{guide[1]}}">{{guide[0]}}</a>
             </li>
-          {% endfor %}
-        </ul>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div id="buy">
+    <h3>Buy {{ page.modname }}</h3>
+    <ul> 
+      {% for store in page.buy %}
+      <li>
+        <a href="{{store[1]}}">{{store[0]}}</a>
       </li>
-
+      {% endfor %}
     </ul>
+    </div>
+    <div id="about">
     {{ content }}
+    </div>
+    <p>More by <a href="index.html">{{ page.designer }}</a></p>
   </div>
 
 </section>

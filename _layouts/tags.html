@@ -1,0 +1,28 @@
+--- 
+layout: default 
+---
+<article class="post">
+    <div class="home">
+        {% assign tags = '' | split: ',' %} 
+        {% assign unique_tags = '' | split: ',' %}
+        {% assign article_tags = site.pages | where: 'layout', 'module' | map: 'tags' | join: ',' | join: ',' | split: ',' %}
+        {% for tag in article_tags %}{% assign tags = tags | push: tag %} {% endfor %}
+        {% assign tags = tags | sort %} {% for tag in tags %}
+        {% unless tag == previous %}
+        {% assign unique_tags = unique_tags | push: tag %} {% endunless %} {% assign previous = tag %} {% endfor %}
+        <ul>
+        {%for tag in unique_tags | sort %}
+        <li>Modules tagged as <a name="{{ tag }}">{{ tag }}</a>
+            <ul>
+                {% for page in site.pages | where: 'layout', 'module' %}
+                {% if page.tags contains tag %}
+                <li><a href="{{ page.url }}">{{ page.modname }}</a> by {{page.designer}}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+        </ul>        
+        {{ content }}
+    </div>
+</article>

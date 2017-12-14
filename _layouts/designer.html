@@ -4,12 +4,12 @@ layout: default
 <article class="post">
   <div class="home">
 
-    {% assign grouped_pages = site.pages | where: 'designer', page.designer | where: 'layout', 'module' | group_by: 'designer' | sort: 'name' %}
+    {% assign grouped_pages = site.pages | where: 'designer', page.designer | where: 'layout', 'module' | group_by: 'designer' | sort: 'designer' %}
     {% for group in grouped_pages %}
     {% assign gname = group.name | downcase %}  
     Modules from {{group.name}}
     <ul>
-      {% for module in group.items %}
+      {% for module in group.items | sort: 'modname' %}
       <li><a href="{{module.url | prepend: site.baseurl }}">{{module.modname | capitalize}}</a></li>
       {% endfor %}
     </ul>      

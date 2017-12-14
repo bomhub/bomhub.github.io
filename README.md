@@ -1,2 +1,5 @@
+---
+layout: default
+---
 # bomhub
-A site for BOMs and build guides for SDIY enthusiasts
+A site for collecting BOMs and build guides for SDIY enthusiasts
