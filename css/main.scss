@@ -18,7 +18,7 @@ $family-serif: 'Roboto Mono', monospace;
 
 // 3. Set the derived variables
 // Use the new pink as the primary color
-$primary: $pink;
+$primary: $blue;
 $primary-invert: $pink-invert;
 // Use the existing orange as the danger color
 $danger: $orange;
@@ -42,6 +42,26 @@ $addColors: (
 );
 $colors: map-merge($colors, $addColors);
 
+// $box-color: #fff;
+$box-radius: 3px;
+// $box-background-color: $primary;
+
 // 6. Import the rest of Bulma
 
 @import "bulma";
+
+.section {
+    padding: 3.25rem 1.5rem;
+}
+
+.navbar-brand {
+	a{
+		font-weight: 700;
+		color: $primary;
+	}
+}
+
+h4{
+	font-weight: 700;
+	font-size: $size-4;
+}

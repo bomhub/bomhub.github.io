@@ -1,28 +1,42 @@
 --- 
 layout: default 
 ---
-<article class="post">
-    <div class="home">
-        {% assign tags = '' | split: ',' %} 
-        {% assign unique_tags = '' | split: ',' %}
-        {% assign article_tags = site.pages | where: 'layout', 'module' | map: 'tags' | join: ',' | join: ',' | split: ',' %}
-        {% for tag in article_tags %}{% assign tags = tags | push: tag %} {% endfor %}
-        {% assign tags = tags | sort %} {% for tag in tags %}
-        {% unless tag == previous %}
-        {% assign unique_tags = unique_tags | push: tag %} {% endunless %} {% assign previous = tag %} {% endfor %}
-        <ul>
-        {%for tag in unique_tags | sort %}
-        <li>Modules tagged as <a name="{{ tag }}">{{ tag }}</a>
+
+  {% assign tags = '' | split: ',' %} 
+  {% assign unique_tags = '' | split: ',' %}
+  {% assign article_tags = site.pages | where: 'layout', 'module' | map: 'tags' | join: ',' | join: ',' | split: ',' %}
+  {% for tag in article_tags %}{% assign tags = tags | push: tag %} {% endfor %}
+  {% assign tags = tags | sort %} {% for tag in tags %}
+  {% unless tag == previous %}
+  {% assign unique_tags = unique_tags | push: tag %} {% endunless %} {% assign previous = tag %} {% endfor %}
+  
+  <tags class="tags">
+    {%for tag in unique_tags | sort %}
+      <a href="#{{ tag }}" class="tag is-primary is-medium">{{ tag }}</a>
+    {% endfor %}
+  </tags>
+
+
+  {% assign rows = unique_tags.size | divided_by: 3.0 | ceil %}
+
+  {% for i in (1..rows) %}
+    {% assign offset = forloop.index0 | times: 3 %}
+    <div class="tile is-ancestor">
+      {% for tag in unique_tags limit:3 offset:offset %}
+        <div class="tile is-parent">
+          <article id="{{ tag }}" class="tile is-child box">
+            <h4>&#x23 {{ tag }}</h4>
             <ul>
-                {% for page in site.pages | where: 'layout', 'module' %}
-                {% if page.tags contains tag %}
-                <li><a href="{{ page.url }}">{{ page.modname }}</a> by {{page.designer}}</li>
-                {% endif %}
-                {% endfor %}
+              {% for page in site.pages | where: 'layout', 'module' %}
+              {% if page.tags contains tag %}
+              <li><a href="{{ page.url }}">{{ page.modname }}</a> <br><small>by {{page.designer}}</small></li>
+              {% endif %}
+              {% endfor %}
             </ul>
-        </li>
-        {% endfor %}
-        </ul>        
-        {{ content }}
+          </article>
+        </div>
+      {% endfor %}
     </div>
-</article>
+  {% endfor %}
+     
+  {{ content }}
