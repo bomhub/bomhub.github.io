@@ -6,13 +6,16 @@ layout: default
 
     {% assign grouped_pages = site.pages | where: 'designer', page.designer | where: 'layout', 'module' | group_by: 'designer' | sort: 'designer' %}
     {% for group in grouped_pages %}
-    {% assign gname = group.name | downcase %}  
-    Modules from {{group.name}}
+    <h2>{% if page.homepage %}
+    Modules from <a href="{{page.homepage}}">{{page.designer}}</a>
+    {% else %}
+    Modules from {{page.designer}}
+    {% endif %}</h2>
     <ul>
       {% for module in group.items | sort: 'modname' %}
       <li><a href="{{module.url | prepend: site.baseurl }}">{{module.modname | capitalize}}</a></li>
       {% endfor %}
-    </ul>      
+    </ul>
     {% endfor %}
     {{ content }}
     </div>

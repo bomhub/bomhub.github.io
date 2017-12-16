@@ -12,12 +12,7 @@
     </button>
   </div>
   <div class="navbar-menu">
-    {% for my_page in site.pages %}
-      {% if my_page.title %}
-      <a class="page-link" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a>
-      {% endif %}
-    {% endfor %}
-    <a href="contributing">How to contribute</a>
-    <a href="tags">Modules by tag</a>
+    <a class="page-link" href="{{site.baseurl}}/contributing">How to contribute</a>
+    <a class="page-link" href="{{site.baseurl}}/tags">Modules by tag</a>
   </div>
 </nav>
