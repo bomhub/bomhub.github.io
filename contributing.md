@@ -67,4 +67,4 @@ Below the modules header/metadata is where tips and build advice lives. This is 
 We'll happily take down (or preferably correct) any information on modules or designers. Easiest is to open a pull request removing the content, or if you don't know how file an [issue][issues]
 
 
-[issues]: https://github.com/bomhub/issues
+[issues]: https://github.com/bomhub/bomhub.github.io/issues
