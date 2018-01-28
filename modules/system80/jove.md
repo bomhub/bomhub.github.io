@@ -5,7 +5,7 @@ tags: Multimode Filter
 size: 14hp, 3U, 28mm, eurorack
 designer: System80
 build:
-    bom: 
+    bom:
         csv: https://github.com/minisystem/JOVE/blob/master/JOVE_BOM.csv
         octopart: https://octopart.com/bom-tool/0BVEzM8i
 ---

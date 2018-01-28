@@ -1,15 +1,15 @@
---- 
-layout: default 
+---
+layout: default
 ---
 
-  {% assign tags = '' | split: ',' %} 
+  {% assign tags = '' | split: ',' %}
   {% assign unique_tags = '' | split: ',' %}
   {% assign article_tags = site.pages | where: 'layout', 'module' | map: 'tags' | join: ',' | join: ',' | split: ',' %}
   {% for tag in article_tags %}{% assign tags = tags | push: tag %} {% endfor %}
   {% assign tags = tags | sort %} {% for tag in tags %}
   {% unless tag == previous %}
   {% assign unique_tags = unique_tags | push: tag %} {% endunless %} {% assign previous = tag %} {% endfor %}
-  
+
   <tags class="tags">
     {%for tag in unique_tags | sort %}
       <a href="#{{ tag }}" class="tag is-primary is-medium">{{ tag }}</a>
@@ -38,5 +38,5 @@ layout: default
       {% endfor %}
     </div>
   {% endfor %}
-     
   {{ content }}
+  <script src="js/hide_tags.js"></script>
