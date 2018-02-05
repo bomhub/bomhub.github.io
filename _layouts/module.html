@@ -4,9 +4,9 @@ layout: default
 
 <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
   <ul>
-    <li><a href="{{ my_page.url | prepend: site.baseurl }}">Home</a></li>
+    <li><a href="/{{ site.baseurl }}">Home</a></li>
     <li><a href="index.html">{{ page.designer }}</a></li>
-    <li class="is-active"><a href="{{page.homepage}}">{{ page.modname }}</a></li>
+    <li class="is-active"><a href="{{ my_page.url | prepend: site.baseurl }}">{{ page.modname }}</a></li>
   </ul>
 </nav>
 
@@ -57,13 +57,18 @@ layout: default
     </div>
     <div id="buy">
     <h3>Buy {{ page.modname }}</h3>
-    <ul> 
+    <ul>
       {% for store in page.buy %}
       <li>
         <a href="{{store[1]}}">{{store[0]}}</a>
       </li>
       {% endfor %}
     </ul>
+    </div>
+    <div id="build-controls">
+      <button value="want">I want to build</button>
+      <button value="ready">I'm ready to build</button>
+      <button value="done">I have built</button>
     </div>
     <div id="about">
     {{ content }}
@@ -72,3 +77,55 @@ layout: default
   </div>
 
 </section>
+
+<script type="text/javascript">
+  var doc = {
+    bom: {{ page.build.data | jsonify }},
+    module: {{ page.modname  | jsonify }},
+    url: {{page.url | jsonify }}
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    var db = new PouchDB('diy-planned');
+    db.get('_design/info').catch(function (err) {
+      console.log(err);
+      var ddoc = {
+        _id: '_design/info',
+        views: {
+          by_module: {
+            map: function (doc) { emit(doc.module, doc.state); }.toString(),
+            reduce: '_count'
+          },
+          by_state: {
+            map: function (doc) { emit(doc.state, doc.module); }.toString(),
+            reduce: '_count'
+          }
+        }
+      };
+      db.put(ddoc).then(function () {
+        console.log('Created design doc');
+      }).catch(function (err) {
+        console.log('Error creating design doc - already exists?');
+      });
+    });
+    function toBuild(el) {
+      if (el.target.value){
+        doc.state = el.target.value;
+        db.post(doc);
+      }
+    };
+    db.query('info/by_module', {reduce: false, key: doc.module, include_docs: true}).then(function resp(data) {
+      var recorded_states = [];
+      data.rows.forEach(function f(row) {
+        recorded_states.push(row.value);
+      })
+      var buttons = document.getElementsByTagName('button');
+      Array.prototype.slice.call(buttons, 0).forEach(function (el) {
+        if (recorded_states.includes(el.value)){
+          el.setAttribute("disabled", "disabled");
+        } else {
+          el.addEventListener('click', toBuild);
+        }
+      });
+    });
+  });
+</script>

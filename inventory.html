@@ -1,0 +1,35 @@
+---
+layout: default
+---
+
+<nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+    <ul>
+        <li>
+            <a href="/{{ site.baseurl }}">Home</a>
+        </li>
+        <li class="is-active">
+            Inventory
+        </li>
+    </ul>
+</nav>
+
+<div id="inventory">
+
+</div>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var db = new PouchDB('diy-planned');
+        db.query('info/by_state', {reduce: false, include_docs: true, key: "want"}).then(function resp(data) {
+            var h = document.getElementById("inventory").innerHTML;
+            document.getElementById("inventory").innerHTML = h +'<h2>Modules I want to build</h2><ul>';
+            data.rows.forEach(function f(row) {
+                console.log(row);
+                h = document.getElementById("inventory").innerHTML;
+                document.getElementById("inventory").innerHTML = h + '<li><a href="' + row.doc.url + '">' + row.doc.module + '</a></li>';
+            });
+            h = document.getElementById("inventory").innerHTML;
+            document.getElementById("inventory").innerHTML = h + '</ul>';
+        });
+    });
+</script>

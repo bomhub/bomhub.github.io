@@ -9,10 +9,10 @@
 title: Bomhub
 email: simon
 description: An index of BOMs and build guides for synth DIY builders.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://bomhub.github.io/" # the base hostname & protocol for your site
-twitter_username: 
+twitter_username:
 github_username:  bomhub
-
+encoding: utf-8
 # Build settings
 markdown: kramdown
