@@ -22,8 +22,8 @@ layout: default
     {% assign offset = forloop.index0 | times: 3 %}
     <div class="tile is-ancestor">
       {% for tag in unique_tags limit:3 offset:offset %}
-        <div class="tile is-parent">
-          <article id="{{ tag }}" class="tile is-child box">
+        <div class="tile is-parent"  id="{{ tag }}">
+          <article class="tile is-child box">
             <h4>&#x23 {{ tag }}</h4>
             <ul>
               {% for page in site.pages | where: 'layout', 'module' %}
@@ -39,3 +39,4 @@ layout: default
   {% endfor %}
   {{ content }}
   <script src="js/hide_tags.js"></script>
+  <a href="#" id="show_all" style="hidden">Show all tags</a>

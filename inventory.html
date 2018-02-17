@@ -18,18 +18,51 @@ layout: default
 </div>
 
 <script type="text/javascript">
+    // TODO: https://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/
     document.addEventListener('DOMContentLoaded', function () {
         var db = new PouchDB('diy-planned');
-        db.query('info/by_state', {reduce: false, include_docs: true, key: "want"}).then(function resp(data) {
-            var h = document.getElementById("inventory").innerHTML;
-            document.getElementById("inventory").innerHTML = h +'<h2>Modules I want to build</h2><ul>';
+        var titles_by_type = {
+            'want': 'Modules I want to build',
+            'ready': 'Modules I have that are ready to go (have all the parts)',
+            'done': 'Modules that are already in the rack'
+        }
+        db.query('info/by_state', {reduce: false, include_docs: true}).then(function resp(data) {
+            console.log(data);
+            var modules_by_state = {
+                'want': {},
+                'ready': {},
+                'done': {}
+            }
             data.rows.forEach(function f(row) {
-                console.log(row);
-                h = document.getElementById("inventory").innerHTML;
-                document.getElementById("inventory").innerHTML = h + '<li><a href="' + row.doc.url + '">' + row.doc.module + '</a></li>';
+                if (row.doc.state in modules_by_state){
+                    modules_by_state[row.doc.state][row.doc.module] = row.doc.url;
+                }
             });
-            h = document.getElementById("inventory").innerHTML;
-            document.getElementById("inventory").innerHTML = h + '</ul>';
+            Object.entries(modules_by_state.done).forEach(function (d) {
+                var d = d[0];
+                delete modules_by_state.ready[d];
+                delete modules_by_state.want[d];
+            });
+            Object.entries(modules_by_state.ready).forEach(function (d) {
+                var d = d[0];
+                delete modules_by_state.want[d];
+            });
+            var h = document.getElementById("inventory").innerHTML;
+            ['want', 'ready', 'done'].forEach(function (key) {
+                var first = true;
+                Object.entries(modules_by_state[key]).forEach(function (d) {
+                    var url = d[1];
+                    var module = d[0];
+                    if (first){
+                        document.getElementById("inventory").innerHTML = h + '<h2>' + titles_by_type[key] + '</h2><ul>';
+                        first = false;
+                    }
+                    h = document.getElementById("inventory").innerHTML;
+                    document.getElementById("inventory").innerHTML = h + '<li><a href="' + url + '">' + module + '</a></li>';
+                });
+                h = document.getElementById("inventory").innerHTML;
+                document.getElementById("inventory").innerHTML = h + '</ul>';
+            });
         });
     });
 </script>

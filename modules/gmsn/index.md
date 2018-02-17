@@ -1,5 +1,5 @@
 ---
 layout: designer
-designer: Korb
-homepage: https://www.korb-modular.com/
+designer: Glasgow Make Some Noise
+homepage: https://gmsn.co.uk
 ---

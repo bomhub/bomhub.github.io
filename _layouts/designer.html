@@ -13,7 +13,7 @@ layout: default
     {% endif %}</h2>
     <ul>
       {% for module in group.items | sort: 'modname' %}
-      <li><a href="{{module.url | prepend: site.baseurl }}">{{module.modname | capitalize}}</a></li>
+      <li><a href="{{module.url }}">{{module.modname | capitalize}}</a></li>
       {% endfor %}
     </ul>
     {% endfor %}

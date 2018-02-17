@@ -1,7 +1,7 @@
 ---
 layout: module
-modname: triad
-tags: AD
+modname: triple sloth
+tags: LFO,VLFO
 size: 8hp,eurorack
 designer: NLC
 ---
