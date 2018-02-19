@@ -17,3 +17,10 @@ window.addEventListener("hashchange", function(){
         show_by_tag(null);
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (window.location.hash) {
+        var tag = window.location.hash.split('#')[1];
+        show_by_tag(tag);
+    }
+});
