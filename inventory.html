@@ -51,6 +51,7 @@ layout: default
             ['want', 'ready', 'done'].forEach(function (key) {
                 var first = true;
                 Object.entries(modules_by_state[key]).forEach(function (d) {
+                    console.log(d);
                     var url = d[1];
                     var module = d[0];
                     if (first){
