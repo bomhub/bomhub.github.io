@@ -84,10 +84,11 @@ layout: default
 
 <script type="text/javascript">
   var doc = {
-    bom: {{ page.build.data | jsonify }},
+    bom: {{ page.bomdata | jsonify }},
     module: {{ page.modname  | jsonify }},
     url: {{page.url | jsonify }}
   }
+  console.log(doc);
   document.addEventListener('DOMContentLoaded', function () {
     var db = new PouchDB('diy-planned');
     db.get('_design/info').catch(function (err) {

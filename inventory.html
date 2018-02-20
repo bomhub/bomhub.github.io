@@ -16,10 +16,79 @@ layout: default
 <div id="inventory">
 
 </div>
+<button value="Download">Download master BOM</button>
 
 <script type="text/javascript">
-    // TODO: https://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/
+    // Based on: https://halistechnology.com/2015/05/28/use-javascript-to-export-your-data-as-csv/
+    var masterBomAsCSV = '';
+    function convertToCSV(args) {
+        var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+        data = args.rows || null;
+        if (data == null || !data.length) {
+            return null;
+        }
+
+        columnDelimiter = ',';
+        lineDelimiter = '\n';
+
+        keys = [
+            'qty',
+            'value',
+            'parts',
+            'comments'
+        ]
+
+        result = '';
+        result += keys.join(columnDelimiter);
+        result += lineDelimiter;
+        data.forEach(function (item) {
+            // a module with a bom, a bom is an array of objects
+            var bomdata = item.doc.bom
+            if (bomdata){
+                bomdata.forEach(function (bomitem) {
+                    var ctr = 0;
+                    keys.forEach(function (key) {
+                        if (ctr > 0) result += columnDelimiter;
+                        if (Object.keys(bomitem).indexOf(key) >= 0) {
+                            if (key == 'parts') {
+                                result += item.doc.module + ':' + bomitem[key];
+                            } else {
+                                result += bomitem[key];
+                            }
+                        }
+                        ctr++;
+                    });
+                    result += lineDelimiter;
+                });
+            }
+        });
+        return result;
+    }
+
+    function downloadCSV(args) {
+        var data, filename, link;
+        var csv = masterBomAsCSV;
+        if (csv == null) return;
+
+        filename = args.filename || 'export.csv';
+
+        if (!csv.match(/^data:text\/csv/i)) {
+            csv = 'data:text/csv;charset=utf-8,' + csv;
+        }
+        data = encodeURI(csv);
+
+        link = document.createElement('a');
+        link.setAttribute('href', data);
+        link.setAttribute('download', filename);
+        link.click();
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.getElementsByTagName('button');
+        Array.prototype.slice.call(buttons, 0).forEach(function (el) {
+            el.addEventListener('click', downloadCSV);
+        });
         var db = new PouchDB('diy-planned');
         var titles_by_type = {
             'want': 'Modules I want to build',
@@ -27,7 +96,7 @@ layout: default
             'done': 'Modules that are already in the rack'
         }
         db.query('info/by_state', {reduce: false, include_docs: true}).then(function resp(data) {
-            console.log(data);
+            masterBomAsCSV = convertToCSV(data);
             var modules_by_state = {
                 'want': {},
                 'ready': {},
